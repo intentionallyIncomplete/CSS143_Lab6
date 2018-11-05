@@ -60,7 +60,7 @@ public class RecursionLab {
 
 	/** 
 	 * @param n
-	 * recursiveSum() function holds the details of what each suspended
+	 * @return recursiveSum() function holds the details of what each suspended
 	 * call will use to produce an output to be handed back to the same method. 
 	 */
 	public static int recursiveSum(int n) {
@@ -73,7 +73,26 @@ public class RecursionLab {
 		}		
 	}
 
-	public       00                                                                                                                                                                                                                                                                                                                                                                           
+	/**
+	 * @param n
+	 * @param base
+	 * @return
+	 * Recursively calls for an integer 'n' which represents the base, and then
+	 * an integer 'base' which is the base to raise from.
+	 * 
+	 * Base Case: When n==0, this is to say "when any number raised to it's 0th power"
+	 * is always 1, so return 1.
+	 */
+	public static int recursiveExponent(int base, int n) {
+		updateDisaplyForExpRec(base, n);
+		if(n == 0) {
+			return base;
+		}else if(n < 0) {
+			return -1;
+		}else {
+			return(base*recursiveExponent(n-1,base));
+		}
+	}                                                                                                                                                                                                                                                                                                                                                     
 	/**
 	 * @param i
 	 * @return Returns the same value as the recursive function.
@@ -103,6 +122,41 @@ public class RecursionLab {
 		myArea.setText( text );
 	}
 					
+	/**
+	 * @param base
+	 * @param n 
+	 * 
+	 * Update method for display on JTextArea
+	 */
+	public static void updateDisaplyForExpRec(int base, int n){
+		count++;
+		String text = myArea.getText();
+
+		if( count == 1 )  {
+			text += "\n       return ( n + recursiveExponent( n - 1 ) ) \n\n";
+			text += "       CALL STACK IN MAIN MEMORY                ";
+		}
+
+
+		text += "\n/*******************Method invocation " + count + "*********************";
+
+
+		text += "\n Calling exponentialRecursion( int n = " + n +" ). ";
+		text += "\n The return statement from this function will resolve in " + (n-1) + " more recursive method calls...";
+
+		if( n != 1 ) {
+			text += "\n The return statement which invokes the recursive call is \"return ( " + n + " * exponentialRecursion( "+ (n - 1) +","+base+"));";
+		} else {
+			text += "\n The base case has been hit.\nThe return statement is \"return 1;\" which is the value returned to the expression above. ";
+			text += "\n Notice how hitting the base case will provide a solid, known piece of information from which we will construct more known ";
+			text += "\n information by bubbling up through all of the other, yet-to-be-determined return expressions";
+		}
+		text += "\n***************************************************************************/";
+
+		myArea.setText( text );
+	}
+
+	
 	/**
 	 * @param n
 	 * Building the String of combined data for output processing.
