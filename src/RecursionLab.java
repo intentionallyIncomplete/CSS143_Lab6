@@ -35,12 +35,11 @@ import javax.swing.*;
 public class RecursionLab {
 	/*Class level data members and statics*/
 	/*
-	 * JTextArea creates a new canvas
-	 * static count 
+	 * var JTextArea - Generates a new canvas.
+	 * var static count - Used primarily in the updateDisplay methods.
 	 * */
 	private static JTextArea myArea = new JTextArea();
 	private static int count = 0;
-
 
 	@SuppressWarnings("javadoc")
 	public static void main(String args[]) {
@@ -50,20 +49,22 @@ public class RecursionLab {
 		//int solution = recursiveSum( 20 );
 		
 		/***********************************************/
-		/* Some method calls for modules that use recursion to solve problems*/
-		int solution = expSumRule(2,6);
+		/* Some method calls for modules that use recursion to solve problems.*/
+		//int solution = expSumRule(2,6);
+		//int solution  = expSumRuleV2(2,11);
+		int solution = fib(5);
 		/***********************************************/
 		
-		//Some GUI details
+		//Some GUI details.
 		myArea.setText(("Result is : " + solution + "\n" + myArea.getText()));
 		JScrollPane myPane = new JScrollPane( myArea );
 		myPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		myPane.setPreferredSize(new Dimension(600,300));
 		JOptionPane.showMessageDialog( null, myPane );
 		System.exit(0);
-	}//end main
+	}
 
-	/*			MODULES THAT USE RECURSION			*/
+	/*			MODULES THAT USE RECURSION.			*/
 	/** 
 	 * @param n
 	 * @return recursiveSum() function holds the details of what each suspended
@@ -96,7 +97,41 @@ public class RecursionLab {
 		}else {
 			return(base * expSumRule(base, n-1));
 		}
-	}                                                                                                                                                                                                                                                                                                                                                     
+	}     
+	
+	/**
+	 * @param base
+	 * @param n
+	 * @return Returns the same value as the module expSumRule(int,int) but with
+	 * a different, more efficient routine.
+	 */
+	public static int expSumRuleV2(int base, int n) {
+		updateDisaplyForExpRecV2(base,n);
+		if(n == 0 || n == 1) {
+			return base;
+		}else if (n % 2 == 0){
+			return (int) Math.pow(base * expSumRuleV2(base,n/2), 2);
+		}else {
+			return (int) Math.pow(base * expSumRuleV2(base, (n-1)/2), 2);
+		}
+	}
+	
+	/**
+	 * @param n
+	 * @return Returns the value of the integer provided after processing it by
+	 * the Fibonacci sequence.
+	 */
+	public static int fib(int n){
+		updateFib(n);
+		if(n == 0){
+			return 0;
+		}else if(n == 1){
+			return 1;
+		}else{
+			return fib(n-1) + fib(n-2);
+		}
+}
+	
 	/**
 	 * @param i
 	 * @return Returns the same value as the recursive function.
@@ -111,7 +146,7 @@ public class RecursionLab {
 		return total;
 	}						
 
-	/*		DISPLAY METHODS FOR ABOVE MODULES		*/
+	/*		DISPLAY METHODS FOR ABOVE MODULES.		*/
 	/**
 	 * @param n
 	 * A given method for printing all the data to the screen in a formatted way.
@@ -136,17 +171,14 @@ public class RecursionLab {
 	public static void updateDisaplyForExpRec(int base, int n){
 		count++;
 		String text = myArea.getText();
-
-		if( count == 1 )  {
+		
+		if(count == 1)  {
 			text += "\n       return ( base * expSumRule( n - 1 ) ) \n\n";
 			text += "       CALL STACK IN MAIN MEMORY                ";
 		}
 
-
 		text += "\n/*******************Method invocation " + count + "*********************";
-
-
-		text += "\n Calling exponentialRecursion( int n = " + n +" ). ";
+		text += "\n Calling expSumRule( int n = " + n +" ). ";
 		text += "\n The return statement from this function will resolve in " + (n-1) + " more recursive method calls...";
 
 		if( n != 1 ) {
@@ -158,7 +190,63 @@ public class RecursionLab {
 
 		myArea.setText( text );
 	}
+	
+	/**
+	 * @param base
+	 * @param n
+	 * 
+	 * Updates display for the 2nd version of the module expRuleRum()
+	 */
+	public static void updateDisaplyForExpRecV2(int base, int n){
+		count++;
+		String text = myArea.getText();
+		
+		if(count == 1)  {
+			text += "\n       (int) Math.pow(base * expSumRuleV2(base,n/2), 2) || "
+					+ " return (int) Math.pow(base * expSumRuleV2(base, (n-1)/2), 2) \n\n";
+			text += "       CALL STACK IN MAIN MEMORY                ";
+		}
 
+		text += "\n/*******************Method invocation " + count + "*********************";
+		text += "\n Calling expSumRuleV2( int n = " + n +" ). ";
+
+		if( n != 1 ) {
+			text += "\n The return statement, when n ="+n+" which invokes the recursive call is " + "return (int) Math.pow("+base+" * expSumRuleV2("+base+","+n/2+")"+",2)";
+		} else {
+			text += "\n The base case has been hit.\nThe return statement is \"return base;\" which is the value returned to the expression above. ";
+		}
+		text += "\n***************************************************************************/";
+
+		myArea.setText( text );
+	}
+	
+	/**
+	 * @param n
+	 * Updates display for the static method fib(int)
+	 */
+	public static void updateFib(int n) {
+		count++;
+		String text = myArea.getText();
+		
+		if(count == 1)  {
+			text += "\n       return fib(n-1) + fib(n-2) ) \n\n";
+			text += "       CALL STACK IN MAIN MEMORY                ";
+		}
+
+		text += "\n/*******************Method invocation " + count + "*********************";
+		text += "\n Calling expSumRule( int n = " + n +" ). ";
+		text += "\n The return statement from this function will resolve in " + n + " more recursive method calls...";
+
+		if( n != 1 ) {
+			text += "\n The return statement which invokes the recursive call is return fib("+(n-1)+") + "+"fib("+(n-2)+")";
+		} else {
+			text += "\n The base case has been hit.\nThe return statement is \"return 0 | 1;\" which is the value returned to the expression above. ";
+		}
+		text += "\n***************************************************************************/";
+
+		myArea.setText( text );
+	}
+	
 	/**
 	 * @param n
 	 * Building the String of combined data for output processing.
