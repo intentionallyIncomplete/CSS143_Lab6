@@ -47,14 +47,15 @@ public class RecursionLab {
 		// while the other is iterative.
 		//int solution = iterativeSum( 20 );
 		//int solution = recursiveSum( 20 );
-		
+
 		/***********************************************/
 		/* Some method calls for modules that use recursion to solve problems.*/
 		//int solution = expSumRule(2,6);
 		//int solution  = expSumRuleV2(2,11);
-		int solution = fib(5);
+		//int solution = fib(5);
+		int solution = factorialSum(5);
 		/***********************************************/
-		
+
 		//Some GUI details.
 		myArea.setText(("Result is : " + solution + "\n" + myArea.getText()));
 		JScrollPane myPane = new JScrollPane( myArea );
@@ -98,7 +99,7 @@ public class RecursionLab {
 			return(base * expSumRule(base, n-1));
 		}
 	}     
-	
+
 	/**
 	 * @param base
 	 * @param n
@@ -115,7 +116,7 @@ public class RecursionLab {
 			return (int) Math.pow(base * expSumRuleV2(base, (n-1)/2), 2);
 		}
 	}
-	
+
 	/**
 	 * @param n
 	 * @return Returns the value of the integer provided after processing it by
@@ -130,8 +131,21 @@ public class RecursionLab {
 		}else{
 			return fib(n-1) + fib(n-2);
 		}
-}
-	
+	}
+
+	/**
+	 * @param n
+	 * @return Returns integer value of 'n' factorial (n!)
+	 */
+	public static int factorialSum(int n){
+		updateFactSum(n);
+		if(n == 1){
+			return 1;
+		}else{
+			return (n * factorialSum(n-1));
+		}
+	}
+
 	/**
 	 * @param i
 	 * @return Returns the same value as the recursive function.
@@ -161,7 +175,7 @@ public class RecursionLab {
 
 		myArea.setText( text );
 	}
-					
+
 	/**
 	 * @param base
 	 * @param n 
@@ -171,7 +185,7 @@ public class RecursionLab {
 	public static void updateDisaplyForExpRec(int base, int n){
 		count++;
 		String text = myArea.getText();
-		
+
 		if(count == 1)  {
 			text += "\n       return ( base * expSumRule( n - 1 ) ) \n\n";
 			text += "       CALL STACK IN MAIN MEMORY                ";
@@ -190,7 +204,7 @@ public class RecursionLab {
 
 		myArea.setText( text );
 	}
-	
+
 	/**
 	 * @param base
 	 * @param n
@@ -200,7 +214,7 @@ public class RecursionLab {
 	public static void updateDisaplyForExpRecV2(int base, int n){
 		count++;
 		String text = myArea.getText();
-		
+
 		if(count == 1)  {
 			text += "\n       (int) Math.pow(base * expSumRuleV2(base,n/2), 2) || "
 					+ " return (int) Math.pow(base * expSumRuleV2(base, (n-1)/2), 2) \n\n";
@@ -219,7 +233,7 @@ public class RecursionLab {
 
 		myArea.setText( text );
 	}
-	
+
 	/**
 	 * @param n
 	 * Updates display for the static method fib(int)
@@ -227,9 +241,9 @@ public class RecursionLab {
 	public static void updateFib(int n) {
 		count++;
 		String text = myArea.getText();
-		
+
 		if(count == 1)  {
-			text += "\n       return fib(n-1) + fib(n-2) ) \n\n";
+			text += "\n       return fib(n-1) + fib(n-2)) \n\n";
 			text += "       CALL STACK IN MAIN MEMORY                ";
 		}
 
@@ -246,7 +260,34 @@ public class RecursionLab {
 
 		myArea.setText( text );
 	}
-	
+
+	/**
+	 * @param n
+	 * Updates display for the static method factorialSum(int)
+	 */
+	public static void updateFactSum(int n) {
+		count++;
+		String text = myArea.getText();
+
+		if(count == 1)  {
+			text += "\n       return (n * factorialSum(n-1)) \n\n";
+			text += "       CALL STACK IN MAIN MEMORY                ";
+		}
+
+		text += "\n/*******************Method invocation " + count + "*********************";
+		text += "\n Calling expSumRule( int n = " + n +" ). ";
+		text += "\n The return statement from this function will resolve in " + (n-1) + " more recursive method calls...";
+
+		if( n != 1 ) {
+			text += "\n The return statement which invokes the recursive call is return factorialSum("+(n-1)+")";
+		} else {
+			text += "\n The base case has been hit.\nThe return statement is \"return 1;\" which is the value returned to the expression above.";
+		}
+		text += "\n***************************************************************************/";
+
+		myArea.setText( text );
+	}
+
 	/**
 	 * @param n
 	 * Building the String of combined data for output processing.
@@ -282,8 +323,3 @@ public class RecursionLab {
 
 	}
 }
-
-
-
-
-
